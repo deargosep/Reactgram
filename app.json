@@ -6,7 +6,7 @@
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "package": "com.deargo.reactgram",
-      "versionCode": 6,
+      "versionCode": 7,
       "googleServicesFile": "./google-services.json"
     },
     "ios": {
@@ -27,7 +27,7 @@
     },
     "name": "Reactgram",
     "slug": "reactgram",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "assetBundlePatterns": [
       "**/*"
     ]

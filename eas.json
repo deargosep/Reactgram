@@ -2,10 +2,10 @@
   "builds": {
     "android": {
       "release": {
-        "workflow": "generic"
+        "workflow": "managed"
       },
       "development": {
-        "workflow": "generic",
+        "workflow": "managed",
         "gradleCommand": ":app:assembleDebug",
         "distribution": "beta"
       }

@@ -4,6 +4,7 @@
   "expo": {
     "icon": "./icon.png",
     "android": {
+      "softwareKeyboardLayoutMode": "pan",
       "package": "com.deargo.reactgram",
       "versionCode": 6,
       "googleServicesFile": "./google-services.json"

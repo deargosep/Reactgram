@@ -1,7 +1,8 @@
 import React from 'react'
-import { View, Text, FlatList, LogBox, } from 'react-native'
-import { Card, Paragraph, Title, Headline, IconButton } from 'react-native-paper'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { Controller, useForm } from 'react-hook-form';
+import { View, Text, FlatList, LogBox, ScrollView, KeyboardAvoidingView, Platform, } from 'react-native'
+import { Card, Paragraph, Title, Headline, IconButton, Button, TextInput } from 'react-native-paper'
+import { KeyboardAwareScrollView, KeyboardAware } from 'react-native-keyboard-aware-scroll-view'
 import { auth, db, Timestamp } from '../../firebase'
 LogBox.ignoreLogs(['VirtualizedLists should never be nested inside'])
 // import {  } from '../Tabs/FeedScreen'
@@ -30,21 +31,27 @@ export default function PostScreen({ navigation, route }) {
         getItem()
     }, [])
     return (
-        <KeyboardAwareScrollView>
-            <Card>
-                <Card.Title right={delButton} title={'@' + item?.user} />
-                <Card.Cover resizeMode='contain' source={{ uri: item?.image }} />
-                <Card.Title title={item?.title} />
-                <Card.Content>
-                    <Paragraph>
-                        {item?.description}
-                    </Paragraph>
-                    <Text style={{ fontSize: 12 }}>{item?.datetime.date}</Text>
-                    <Text style={{ fontSize: 12 }}>{item?.datetime.time}</Text>
-                    <Comments id={id} /> 
-                </Card.Content>
-            </Card>
-        </KeyboardAwareScrollView>
+        <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding':'height'}
+        style={{flexGrow:1}}
+        >
+            <ScrollView>
+                <Card>
+                    <Card.Title right={delButton} title={'@' + item?.user} />
+                    <Card.Cover resizeMode='contain' source={{ uri: item?.image }} />
+                    <Card.Title title={item?.title} />
+                    <Card.Content>
+                        <Paragraph>
+                            {item?.description}
+                        </Paragraph>
+                        <Text style={{ fontSize: 12 }}>{item?.datetime.date}</Text>
+                        <Text style={{ fontSize: 12 }}>{item?.datetime.time}</Text>
+                        <Comments id={id} />
+                    </Card.Content>
+                </Card>
+            </ScrollView>
+            <NewComment id={id} />
+        </KeyboardAvoidingView>
         // <Item item={post} navigation={navigation} />
     )
 }
@@ -82,5 +89,35 @@ function Comments({ id }) {
                 </Card.Content>
             </Card>
         )} />
+    )
+}
+
+function NewComment({id}) {
+    const { control, handleSubmit } = useForm();
+
+    const onSubmit = data => {
+        db.collection('posts').doc(id).collection('comments')
+            .add({ text: data.newComment, userId: auth.currentUser.uid, user: auth.currentUser.displayName ?? auth.currentUser.uid, datetime: Timestamp.fromDate(new Date()) })
+            .then(() => {
+                console.log('sent')
+            })
+    }
+    return (
+        <Card>
+            <Card.Content>
+                <Controller
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            mode={'outlined'} label="Comment" value={value} onBlur={onBlur} onChangeText={onChange} />
+                    )}
+                    name="newComment"
+                />
+                <Button onPress={handleSubmit(onSubmit)}>Send</Button>
+            </Card.Content>
+        </Card>
     )
 }

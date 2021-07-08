@@ -98,7 +98,6 @@ function NewComment({ id }) {
             })
     }
     return (
-<<<<<<< HEAD
         <View>
             <Controller
                 control={control}
@@ -113,24 +112,5 @@ function NewComment({ id }) {
             />
             <Button onPress={handleSubmit(onSubmit)}>Send</Button>
         </View>
-=======
-        <Card>
-            <Card.Content>
-                <Controller
-                    control={control}
-                    rules={{
-                        required: true,
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            mode={'outlined'} label="Comment" value={value} onBlur={onBlur} onChangeText={onChange} />
-                    )}
-                    name="newComment"
-                    defaultValue=""
-                />
-                <Button onPress={handleSubmit(onSubmit)}>Send</Button>
-            </Card.Content>
-        </Card>
->>>>>>> 24135d39f6f4f2d61a3b2e1dfff20ba56e6d71bd
     )
 }

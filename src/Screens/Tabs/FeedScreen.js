@@ -44,7 +44,9 @@ export function Item({ item, navigation }) {
     React.useEffect(() => {
         db.collection('users').doc(item.userId).get()
             .then((doc) => {
-                setAvatarUri(doc.data())
+                let data = doc.data()
+                console.log(data)
+                if (data.photoURL) setAvatarUri(data?.photoURL)
             })
             .catch((e) => console.log(e))
     }, [])

@@ -15,10 +15,12 @@ export default function AuthScreen({ route, navigation }) {
     React.useEffect(() => {
         console.log(username)
         auth.onAuthStateChanged((user) => {
-            if (user) navigation.reset({
+            if (user) {
+                navigation.reset({
                 index: 0,
                 routes: [{ name: 'Tabs' }],
               });
+            }
         })
     }, [])
     const register = data => {
@@ -40,7 +42,14 @@ export default function AuthScreen({ route, navigation }) {
     const login = data => {
         setLoading(true)
         auth.signInWithEmailAndPassword(data.email, data.password)
-        .catch((err)=>setError(err))
+        .catch((err)=>setError(err)).then((user)=>{
+            db.collection('users').doc(user.user.uid).set({
+                username: data.username,
+                uid:user.user.uid,
+            },{
+                mergeFields:true
+              })
+        })
     }
     if (username) {
         return (

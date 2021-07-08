@@ -115,6 +115,7 @@ function NewComment({id}) {
                             mode={'outlined'} label="Comment" value={value} onBlur={onBlur} onChangeText={onChange} />
                     )}
                     name="newComment"
+                    defaultValue=""
                 />
                 <Button onPress={handleSubmit(onSubmit)}>Send</Button>
             </Card.Content>

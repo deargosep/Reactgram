@@ -30,9 +30,8 @@ export default function StartScreen({ navigation }) {
     return (
         <KeyboardAwareScrollView
             enableOnAndroid={true}
-            enableAutomaticScroll={(Platform.OS === 'ios')}
+            enableAutomaticScroll={true}
             style={{
-                flexGrow: 1,
                 flexDirection: 'column',
                 display: 'flex',
             }}>

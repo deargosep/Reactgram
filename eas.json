@@ -1,0 +1,14 @@
+{
+  "builds": {
+    "android": {
+      "release": {
+        "workflow": "generic"
+      },
+      "development": {
+        "workflow": "generic",
+        "gradleCommand": ":app:assembleDebug",
+        "distribution": "beta"
+      }
+    }
+  }
+}

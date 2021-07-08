@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "671946630551",
+    "project_id": "reactgram-8e945",
+    "storage_bucket": "reactgram-8e945.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671946630551:android:d7f953c9497026a97610d2",
+        "android_client_info": {
+          "package_name": "com.deargo.reactgram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "671946630551-u0q2cj5oq0trsnphcm2p6k4b8ofvne1o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVp6D7EzpI_bK-_A4XWj46Zl7z03HWi2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "671946630551-u0q2cj5oq0trsnphcm2p6k4b8ofvne1o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

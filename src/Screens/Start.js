@@ -32,7 +32,6 @@ export default function StartScreen({ navigation }) {
             enableOnAndroid={true}
             enableAutomaticScroll={true}
             style={{
-                flexGrow: 1,
                 flexDirection: 'column',
                 display: 'flex',
             }}>

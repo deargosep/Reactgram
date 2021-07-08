@@ -31,27 +31,22 @@ export default function PostScreen({ navigation, route }) {
         getItem()
     }, [])
     return (
-        <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding':'height'}
-        style={{flexGrow:1}}
-        >
-            <ScrollView>
-                <Card>
-                    <Card.Title right={delButton} title={'@' + item?.user} />
-                    <Card.Cover resizeMode='contain' source={{ uri: item?.image }} />
-                    <Card.Title title={item?.title} />
-                    <Card.Content>
-                        <Paragraph>
-                            {item?.description}
-                        </Paragraph>
-                        <Text style={{ fontSize: 12 }}>{item?.datetime.date}</Text>
-                        <Text style={{ fontSize: 12 }}>{item?.datetime.time}</Text>
-                        <Comments id={id} />
-                    </Card.Content>
-                </Card>
-            </ScrollView>
-            <NewComment id={id} />
-        </KeyboardAvoidingView>
+        <ScrollView >
+            <Card>
+                <Card.Title right={delButton} title={'@' + item?.user} />
+                <Card.Cover resizeMode='contain' source={{ uri: item?.image }} />
+                <Card.Title title={item?.title} />
+                <Card.Content>
+                    <Paragraph>
+                        {item?.description}
+                    </Paragraph>
+                    <Text style={{ fontSize: 12 }}>{item?.datetime.date}</Text>
+                    <Text style={{ fontSize: 12 }}>{item?.datetime.time}</Text>
+                    <NewComment id={id} />
+                    <Comments id={id} />
+                </Card.Content>
+            </Card>
+        </ScrollView>
         // <Item item={post} navigation={navigation} />
     )
 }
@@ -59,7 +54,7 @@ export default function PostScreen({ navigation, route }) {
 function Comments({ id }) {
     const [comments, setComments] = React.useState(null)
     const getData = () => {
-        db.collection('posts').doc(id).collection('comments').orderBy('datetime', 'asc').onSnapshot((docs) => {
+        db.collection('posts').doc(id).collection('comments').orderBy('datetime', 'desc').onSnapshot((docs) => {
             const comments = []
             docs.forEach((doc) => {
                 comments.push({
@@ -79,7 +74,7 @@ function Comments({ id }) {
         getData();
     }, [])
     return (
-        <FlatList data={comments} renderItem={({ item }) => (
+        <FlatList style={{ borderTopWidth: 1 }} data={comments} renderItem={({ item }) => (
             <Card>
                 <Card.Content>
                     <Text style={{ fontWeight: 'bold', fontFamily: 'Inter Medium' }}>@{item?.user}</Text>
@@ -92,7 +87,7 @@ function Comments({ id }) {
     )
 }
 
-function NewComment({id}) {
+function NewComment({ id }) {
     const { control, handleSubmit } = useForm();
 
     const onSubmit = data => {
@@ -103,21 +98,19 @@ function NewComment({id}) {
             })
     }
     return (
-        <Card>
-            <Card.Content>
-                <Controller
-                    control={control}
-                    rules={{
-                        required: true,
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            mode={'outlined'} label="Comment" value={value} onBlur={onBlur} onChangeText={onChange} />
-                    )}
-                    name="newComment"
-                />
-                <Button onPress={handleSubmit(onSubmit)}>Send</Button>
-            </Card.Content>
-        </Card>
+        <View>
+            <Controller
+                control={control}
+                rules={{
+                    required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                        mode={'outlined'} label="Comment" value={value} onBlur={onBlur} onChangeText={onChange} />
+                )}
+                name="newComment"
+            />
+            <Button onPress={handleSubmit(onSubmit)}>Send</Button>
+        </View>
     )
 }

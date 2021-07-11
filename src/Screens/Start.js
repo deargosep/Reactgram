@@ -21,7 +21,7 @@ export default function StartScreen({ navigation }) {
         db.collection('users').where('username', '==', data.username).get()
             .then((user) => {
                 navigation.navigate('Auth', {
-                    username: user.docs[0].data().username,
+                    username: user.docs[0] ? user.docs[0].data().username : undefined,
                     inputUsername: data.username
                 })
                 setLoading(false)
